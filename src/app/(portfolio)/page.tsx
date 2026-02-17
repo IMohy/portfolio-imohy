@@ -1,8 +1,20 @@
 import { PortfolioContent } from "@/components/portfolio/PortfolioContent";
 import { prisma } from "@/lib/prisma";
+import type { Hero, About, Skill, Experience, Project, Education, Certification, SiteSettings } from "@/types";
 
-async function getPortfolioData() {
-  const empty = {
+type PortfolioData = {
+  hero: Hero | null;
+  about: About | null;
+  skills: Skill[] | null;
+  experience: Experience[] | null;
+  projects: Project[] | null;
+  education: Education[] | null;
+  certifications: Certification[] | null;
+  settings: SiteSettings | null;
+};
+
+async function getPortfolioData(): Promise<PortfolioData> {
+  const empty: PortfolioData = {
     hero: null,
     about: null,
     skills: null,
@@ -26,7 +38,8 @@ async function getPortfolioData() {
         prisma.siteSettings.findUnique({ where: { id: "settings" } }).catch(() => null),
       ]);
 
-    return { hero, about, skills, experience, projects, education, certifications, settings };
+    // Serialize to convert Prisma Date objects to ISO strings for the client component
+    return JSON.parse(JSON.stringify({ hero, about, skills, experience, projects, education, certifications, settings }));
   } catch {
     return empty;
   }
