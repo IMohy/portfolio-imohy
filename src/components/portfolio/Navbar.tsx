@@ -67,7 +67,7 @@ export function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 px-3 sm:px-4 overflow-hidden">
+      <div className="fixed top-[env(safe-area-inset-top)] left-0 right-0 z-50 flex justify-center pt-3 px-3 sm:px-4 overflow-hidden">
         <nav
           ref={navRef}
           className="w-full max-w-5xl min-w-0 rounded-2xl border border-white/8 bg-(--color-bg)/60 py-2.5 px-3 sm:px-4 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-xl backdrop-saturate-[1.8]"

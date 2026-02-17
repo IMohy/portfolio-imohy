@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { QueryProvider } from "@/components/providers/QueryProvider";
+import { SafeAreaThemeColor } from "@/components/providers/SafeAreaThemeColor";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -26,6 +27,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#eef2f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#090d16" },
+  ],
+};
+
 export const metadata: Metadata = {
   title: "Mohamed Mohy — Frontend Developer",
   description:
@@ -49,6 +58,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <ThemeProvider>
+          <SafeAreaThemeColor />
           <QueryProvider>
             {children}
           </QueryProvider>
