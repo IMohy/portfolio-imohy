@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GlassCard } from "@/components/portfolio/GlassCard";
@@ -9,14 +9,20 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { Spinner } from "@/components/ui/Spinner";
 import { educationSchema, certificationSchema, type EducationFormData, type CertificationFormData } from "@/lib/validations";
+import { useEducationData, useCreateEducationEntry, useUpdateEducationEntry, useDeleteEducationEntry } from "@/hooks/api";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, GraduationCap, Award } from "lucide-react";
 import type { Education, Certification } from "@/types";
 
 export default function EducationDashboard() {
-  const [education, setEducation] = useState<Education[]>([]);
-  const [certifications, setCertifications] = useState<Certification[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading } = useEducationData();
+  const createMutation = useCreateEducationEntry();
+  const updateMutation = useUpdateEducationEntry();
+  const deleteMutation = useDeleteEducationEntry();
+
+  const education = data?.education ?? [];
+  const certifications = data?.certifications ?? [];
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"education" | "certification">("education");
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -28,23 +34,6 @@ export default function EducationDashboard() {
   const certForm = useForm<CertificationFormData>({
     resolver: zodResolver(certificationSchema),
   });
-
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await fetch("/api/education");
-      if (res.ok) {
-        const data = await res.json();
-        setEducation(data.education || []);
-        setCertifications(data.certifications || []);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   const openCreateEdu = () => {
     setEditingId(null);
@@ -87,66 +76,44 @@ export default function EducationDashboard() {
   };
 
   const onSubmitEdu = async (data: EducationFormData) => {
-    try {
-      const payload = {
-        type: "education",
-        ...data,
-        order: Number(data.order),
-        graduationDate: data.graduationDate || null,
-      };
+    const payload = {
+      type: "education",
+      ...data,
+      order: Number(data.order),
+      graduationDate: data.graduationDate || null,
+    };
 
+    try {
       if (editingId) {
-        const res = await fetch("/api/education", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: editingId, ...payload }),
-        });
-        if (!res.ok) throw new Error();
+        await updateMutation.mutateAsync({ id: editingId, ...payload });
         toast.success("Updated!");
       } else {
-        const res = await fetch("/api/education", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error();
+        await createMutation.mutateAsync(payload);
         toast.success("Created!");
       }
       setModalOpen(false);
-      fetchData();
     } catch {
       toast.error("Failed to save");
     }
   };
 
   const onSubmitCert = async (data: CertificationFormData) => {
-    try {
-      const payload = {
-        type: "certification",
-        ...data,
-        order: Number(data.order),
-        issueDate: data.issueDate || null,
-      };
+    const payload = {
+      type: "certification",
+      ...data,
+      order: Number(data.order),
+      issueDate: data.issueDate || null,
+    };
 
+    try {
       if (editingId) {
-        const res = await fetch("/api/education", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: editingId, ...payload }),
-        });
-        if (!res.ok) throw new Error();
+        await updateMutation.mutateAsync({ id: editingId, ...payload });
         toast.success("Updated!");
       } else {
-        const res = await fetch("/api/education", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error();
+        await createMutation.mutateAsync(payload);
         toast.success("Created!");
       }
       setModalOpen(false);
-      fetchData();
     } catch {
       toast.error("Failed to save");
     }
@@ -155,16 +122,14 @@ export default function EducationDashboard() {
   const handleDelete = async (id: string, type: "education" | "certification") => {
     if (!confirm("Delete this entry?")) return;
     try {
-      const res = await fetch(`/api/education?id=${id}&type=${type}`, { method: "DELETE" });
-      if (!res.ok) throw new Error();
+      await deleteMutation.mutateAsync({ id, type });
       toast.success("Deleted!");
-      fetchData();
     } catch {
       toast.error("Failed to delete");
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />

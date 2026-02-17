@@ -1,53 +1,35 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { GlassCard } from "@/components/portfolio/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Spinner } from "@/components/ui/Spinner";
 import { Modal } from "@/components/ui/Modal";
+import { useContactMessages, useToggleMessageRead, useDeleteMessage } from "@/hooks/api";
 import { toast } from "sonner";
 import { Trash2, Mail, MailOpen, Eye } from "lucide-react";
 import type { ContactMessage } from "@/types";
 
 export default function ContactDashboard() {
-  const [messages, setMessages] = useState<ContactMessage[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: messages = [], isLoading } = useContactMessages();
+  const toggleReadMutation = useToggleMessageRead();
+  const deleteMutation = useDeleteMessage();
+
   const [selected, setSelected] = useState<ContactMessage | null>(null);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await fetch("/api/contact");
-      if (res.ok) setMessages(await res.json());
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  const markRead = async (msg: ContactMessage) => {
-    try {
-      await fetch("/api/contact", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: msg.id, isRead: !msg.isRead }),
-      });
-      fetchData();
-    } catch {
-      toast.error("Failed to update message");
-    }
+  const markRead = (msg: ContactMessage) => {
+    toggleReadMutation.mutate(
+      { id: msg.id, isRead: !msg.isRead },
+      { onError: () => toast.error("Failed to update message") },
+    );
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this message?")) return;
     try {
-      const res = await fetch(`/api/contact?id=${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error();
+      await deleteMutation.mutateAsync(id);
       toast.success("Message deleted!");
-      fetchData();
     } catch {
       toast.error("Failed to delete message");
     }
@@ -55,12 +37,14 @@ export default function ContactDashboard() {
 
   const viewMessage = (msg: ContactMessage) => {
     setSelected(msg);
-    if (!msg.isRead) markRead(msg);
+    if (!msg.isRead) {
+      toggleReadMutation.mutate({ id: msg.id, isRead: true });
+    }
   };
 
   const unreadCount = messages.filter((m) => !m.isRead).length;
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />

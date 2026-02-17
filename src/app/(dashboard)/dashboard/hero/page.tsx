@@ -1,43 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GlassCard } from "@/components/portfolio/GlassCard";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
+import { useHero, useUpdateHero } from "@/hooks/api";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
 
 export default function HeroDashboard() {
-  const [loading, setLoading] = useState(true);
-  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
+  const { data: hero, isLoading } = useHero();
+  const updateMutation = useUpdateHero();
+
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
-    fetch("/api/hero")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data) reset(data);
-      })
-      .finally(() => setLoading(false));
-  }, [reset]);
+    if (hero) reset(hero);
+  }, [hero, reset]);
 
   const onSubmit = async (data: Record<string, unknown>) => {
     try {
-      const res = await fetch("/api/hero", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error();
+      await updateMutation.mutateAsync(data);
       toast.success("Hero section updated!");
     } catch {
       toast.error("Failed to update hero section");
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />
@@ -61,8 +54,8 @@ export default function HeroDashboard() {
             <Input id="ctaSecondaryText" label="Secondary CTA Text" {...register("ctaSecondaryText")} />
           </div>
           <Input id="resumeUrl" label="Resume URL" placeholder="https://..." {...register("resumeUrl")} />
-          <Button type="submit" variant="primary" disabled={isSubmitting}>
-            <Save size={16} /> {isSubmitting ? "Saving..." : "Save Changes"}
+          <Button type="submit" variant="primary" disabled={updateMutation.isPending}>
+            <Save size={16} /> {updateMutation.isPending ? "Saving..." : "Save Changes"}
           </Button>
         </form>
       </GlassCard>

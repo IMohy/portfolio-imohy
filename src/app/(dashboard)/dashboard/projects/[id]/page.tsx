@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
+import { useProject, useUpdateProject } from "@/hooks/api";
 import { toast } from "sonner";
 import { Save, ArrowLeft } from "lucide-react";
 import { z } from "zod/v4";
@@ -36,62 +37,52 @@ export default function EditProjectPage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+
+  const { data: project, isLoading } = useProject(id);
+  const updateMutation = useUpdateProject();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<ProjectForm>({
     resolver: zodResolver(projectFormSchema),
   });
 
   useEffect(() => {
-    fetch(`/api/projects/${id}`)
-      .then((r) => r.json())
-      .then((data) => {
-        reset({
-          title: data.title || "",
-          slug: data.slug || "",
-          shortDesc: data.shortDesc || "",
-          fullDesc: data.fullDesc || "",
-          thumbnailUrl: data.thumbnailUrl || "",
-          techStack: (data.techStack || []).join(", "),
-          company: data.company || "",
-          role: data.role || "",
-          challenges: data.challenges || "",
-          liveUrl: data.liveUrl || "",
-          repoUrl: data.repoUrl || "",
-          featured: data.featured || false,
-          order: data.order || 0,
-        });
-      })
-      .finally(() => setLoading(false));
-  }, [id, reset]);
+    if (project) {
+      reset({
+        title: project.title || "",
+        slug: project.slug || "",
+        shortDesc: project.shortDesc || "",
+        fullDesc: project.fullDesc || "",
+        thumbnailUrl: project.thumbnailUrl || "",
+        techStack: (project.techStack || []).join(", "),
+        company: project.company || "",
+        role: project.role || "",
+        challenges: project.challenges || "",
+        liveUrl: project.liveUrl || "",
+        repoUrl: project.repoUrl || "",
+        featured: project.featured || false,
+        order: project.order || 0,
+      });
+    }
+  }, [project, reset]);
 
   const onSubmit = async (data: ProjectForm) => {
-    setSaving(true);
     try {
       const payload = {
+        id,
         ...data,
         techStack: data.techStack?.split(",").map((s) => s.trim()).filter(Boolean) || [],
         order: Number(data.order),
       };
 
-      const res = await fetch(`/api/projects/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error();
+      await updateMutation.mutateAsync(payload);
       toast.success("Project updated!");
       router.push("/dashboard/projects");
     } catch {
       toast.error("Failed to update project");
-    } finally {
-      setSaving(false);
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />
@@ -138,8 +129,8 @@ export default function EditProjectPage() {
             <Link href="/dashboard/projects">
               <Button type="button">Cancel</Button>
             </Link>
-            <Button variant="primary" type="submit" disabled={saving}>
-              <Save size={16} /> {saving ? "Saving..." : "Save Changes"}
+            <Button variant="primary" type="submit" disabled={updateMutation.isPending}>
+              <Save size={16} /> {updateMutation.isPending ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </form>

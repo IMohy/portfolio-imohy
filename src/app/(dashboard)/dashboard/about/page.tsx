@@ -1,27 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GlassCard } from "@/components/portfolio/GlassCard";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
+import { useAbout, useUpdateAbout } from "@/hooks/api";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
 
 export default function AboutDashboard() {
-  const [loading, setLoading] = useState(true);
-  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
+  const { data: about, isLoading } = useAbout();
+  const updateMutation = useUpdateAbout();
+
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
-    fetch("/api/about")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data) reset(data);
-      })
-      .finally(() => setLoading(false));
-  }, [reset]);
+    if (about) reset(about);
+  }, [about, reset]);
 
   const onSubmit = async (data: Record<string, unknown>) => {
     try {
@@ -31,19 +29,14 @@ export default function AboutDashboard() {
         totalProjects: Number(data.totalProjects),
         totalCompanies: Number(data.totalCompanies),
       };
-      const res = await fetch("/api/about", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error();
+      await updateMutation.mutateAsync(payload);
       toast.success("About section updated!");
     } catch {
       toast.error("Failed to update about section");
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />
@@ -66,8 +59,8 @@ export default function AboutDashboard() {
             <Input id="totalProjects" label="Total Projects" type="number" {...register("totalProjects")} />
             <Input id="totalCompanies" label="Total Companies" type="number" {...register("totalCompanies")} />
           </div>
-          <Button type="submit" variant="primary" disabled={isSubmitting}>
-            <Save size={16} /> {isSubmitting ? "Saving..." : "Save Changes"}
+          <Button type="submit" variant="primary" disabled={updateMutation.isPending}>
+            <Save size={16} /> {updateMutation.isPending ? "Saving..." : "Save Changes"}
           </Button>
         </form>
       </GlassCard>

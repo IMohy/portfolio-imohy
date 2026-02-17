@@ -1,45 +1,29 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { GlassCard } from "@/components/portfolio/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Spinner } from "@/components/ui/Spinner";
+import { useProjects, useDeleteProject } from "@/hooks/api";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, ExternalLink, Star } from "lucide-react";
-import type { Project } from "@/types";
 
 export default function ProjectsDashboard() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await fetch("/api/projects");
-      if (res.ok) setProjects(await res.json());
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const { data: projects = [], isLoading } = useProjects();
+  const deleteMutation = useDeleteProject();
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this project?")) return;
     try {
-      const res = await fetch(`/api/projects/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error();
+      await deleteMutation.mutateAsync(id);
       toast.success("Project deleted!");
-      fetchData();
     } catch {
       toast.error("Failed to delete project");
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />

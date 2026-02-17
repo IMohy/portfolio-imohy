@@ -1,27 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GlassCard } from "@/components/portfolio/GlassCard";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
+import { useSettings, useUpdateSettings } from "@/hooks/api";
 import { toast } from "sonner";
 import { Save, Palette, Globe, Share2 } from "lucide-react";
 
 export default function SettingsDashboard() {
-  const [loading, setLoading] = useState(true);
-  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
+  const { data: settings, isLoading } = useSettings();
+  const updateMutation = useUpdateSettings();
+
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
-    fetch("/api/settings")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data) reset(data);
-      })
-      .finally(() => setLoading(false));
-  }, [reset]);
+    if (settings) reset(settings);
+  }, [settings, reset]);
 
   const onSubmit = async (data: Record<string, unknown>) => {
     try {
@@ -37,19 +35,14 @@ export default function SettingsDashboard() {
         accentSat: Number(data.accentSat),
         accentLight: Number(data.accentLight),
       };
-      const res = await fetch("/api/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error();
+      await updateMutation.mutateAsync(payload);
       toast.success("Settings saved!");
     } catch {
       toast.error("Failed to save settings");
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />
@@ -110,8 +103,8 @@ export default function SettingsDashboard() {
           </div>
         </GlassCard>
 
-        <Button type="submit" variant="primary" size="lg" className="w-full" disabled={isSubmitting}>
-          <Save size={18} /> {isSubmitting ? "Saving..." : "Save All Settings"}
+        <Button type="submit" variant="primary" size="lg" className="w-full" disabled={updateMutation.isPending}>
+          <Save size={18} /> {updateMutation.isPending ? "Saving..." : "Save All Settings"}
         </Button>
       </form>
     </div>

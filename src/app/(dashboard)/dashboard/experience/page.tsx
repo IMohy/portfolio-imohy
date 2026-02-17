@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GlassCard } from "@/components/portfolio/GlassCard";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { Badge } from "@/components/ui/Badge";
 import { Spinner } from "@/components/ui/Spinner";
+import { useExperience, useCreateExperience, useUpdateExperience, useDeleteExperience } from "@/hooks/api";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, Calendar, MapPin } from "lucide-react";
 import { formatDate } from "@/lib/utils";
@@ -30,27 +31,17 @@ const experienceFormSchema = z.object({
 type ExperienceForm = z.infer<typeof experienceFormSchema>;
 
 export default function ExperienceDashboard() {
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: experiences = [], isLoading } = useExperience();
+  const createMutation = useCreateExperience();
+  const updateMutation = useUpdateExperience();
+  const deleteMutation = useDeleteExperience();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Experience | null>(null);
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ExperienceForm>({
     resolver: zodResolver(experienceFormSchema),
   });
-
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await fetch("/api/experience");
-      if (res.ok) setExperiences(await res.json());
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   const openCreate = () => {
     setEditing(null);
@@ -83,24 +74,13 @@ export default function ExperienceDashboard() {
       };
 
       if (editing) {
-        const res = await fetch("/api/experience", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: editing.id, ...payload }),
-        });
-        if (!res.ok) throw new Error();
+        await updateMutation.mutateAsync({ id: editing.id, ...payload });
         toast.success("Experience updated!");
       } else {
-        const res = await fetch("/api/experience", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error();
+        await createMutation.mutateAsync(payload);
         toast.success("Experience created!");
       }
       setModalOpen(false);
-      fetchData();
     } catch {
       toast.error("Failed to save experience");
     }
@@ -109,16 +89,14 @@ export default function ExperienceDashboard() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this experience?")) return;
     try {
-      const res = await fetch(`/api/experience?id=${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error();
+      await deleteMutation.mutateAsync(id);
       toast.success("Experience deleted!");
-      fetchData();
     } catch {
       toast.error("Failed to delete experience");
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />

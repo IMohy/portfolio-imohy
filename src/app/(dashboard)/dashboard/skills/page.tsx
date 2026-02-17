@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GlassCard } from "@/components/portfolio/GlassCard";
@@ -9,32 +9,23 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { Spinner } from "@/components/ui/Spinner";
 import { skillSchema, type SkillFormData } from "@/lib/validations";
+import { useSkills, useCreateSkill, useUpdateSkill, useDeleteSkill } from "@/hooks/api";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import type { Skill } from "@/types";
 
 export default function SkillsDashboard() {
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: skills = [], isLoading } = useSkills();
+  const createMutation = useCreateSkill();
+  const updateMutation = useUpdateSkill();
+  const deleteMutation = useDeleteSkill();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Skill | null>(null);
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<SkillFormData>({
     resolver: zodResolver(skillSchema),
   });
-
-  const fetchSkills = useCallback(async () => {
-    try {
-      const res = await fetch("/api/skills");
-      if (res.ok) setSkills(await res.json());
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchSkills();
-  }, [fetchSkills]);
 
   const openCreate = () => {
     setEditing(null);
@@ -52,24 +43,13 @@ export default function SkillsDashboard() {
     try {
       const payload = { ...data, order: Number(data.order) };
       if (editing) {
-        const res = await fetch("/api/skills", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: editing.id, ...payload }),
-        });
-        if (!res.ok) throw new Error();
+        await updateMutation.mutateAsync({ id: editing.id, ...payload });
         toast.success("Skill updated!");
       } else {
-        const res = await fetch("/api/skills", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error();
+        await createMutation.mutateAsync(payload);
         toast.success("Skill created!");
       }
       setModalOpen(false);
-      fetchSkills();
     } catch {
       toast.error("Failed to save skill");
     }
@@ -78,10 +58,8 @@ export default function SkillsDashboard() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this skill?")) return;
     try {
-      const res = await fetch(`/api/skills?id=${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error();
+      await deleteMutation.mutateAsync(id);
       toast.success("Skill deleted!");
-      fetchSkills();
     } catch {
       toast.error("Failed to delete skill");
     }
@@ -89,7 +67,7 @@ export default function SkillsDashboard() {
 
   const categories = Array.from(new Set(skills.map((s) => s.category)));
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Spinner size="lg" />

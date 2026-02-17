@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +7,7 @@ import { GlassCard } from "@/components/portfolio/GlassCard";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
+import { useCreateProject } from "@/hooks/api";
 import { toast } from "sonner";
 import { Save, ArrowLeft } from "lucide-react";
 import { slugify } from "@/lib/utils";
@@ -34,9 +34,9 @@ type ProjectForm = z.infer<typeof projectFormSchema>;
 
 export default function NewProjectPage() {
   const router = useRouter();
-  const [saving, setSaving] = useState(false);
+  const createMutation = useCreateProject();
 
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<ProjectForm>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<ProjectForm>({
     resolver: zodResolver(projectFormSchema),
     defaultValues: {
       title: "", slug: "", shortDesc: "", fullDesc: "", thumbnailUrl: "",
@@ -52,7 +52,6 @@ export default function NewProjectPage() {
   };
 
   const onSubmit = async (data: ProjectForm) => {
-    setSaving(true);
     try {
       const payload = {
         ...data,
@@ -61,19 +60,11 @@ export default function NewProjectPage() {
         order: Number(data.order),
       };
 
-      const res = await fetch("/api/projects", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error();
+      await createMutation.mutateAsync(payload);
       toast.success("Project created!");
       router.push("/dashboard/projects");
     } catch {
       toast.error("Failed to create project");
-    } finally {
-      setSaving(false);
     }
   };
 
@@ -116,8 +107,8 @@ export default function NewProjectPage() {
             <Link href="/dashboard/projects">
               <Button type="button">Cancel</Button>
             </Link>
-            <Button variant="primary" type="submit" disabled={saving}>
-              <Save size={16} /> {saving ? "Saving..." : "Create Project"}
+            <Button variant="primary" type="submit" disabled={createMutation.isPending}>
+              <Save size={16} /> {createMutation.isPending ? "Saving..." : "Create Project"}
             </Button>
           </div>
         </form>

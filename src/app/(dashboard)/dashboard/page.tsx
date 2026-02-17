@@ -1,51 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { StatsCard } from "@/components/dashboard/StatsCard";
+import { Spinner } from "@/components/ui/Spinner";
+import { useDashboardStats } from "@/hooks/api";
 import { FolderKanban, Wrench, MessageSquare, Briefcase } from "lucide-react";
 
 export default function DashboardOverview() {
-  const [stats, setStats] = useState({
-    projects: 0,
-    skills: 0,
-    messages: 0,
-    experience: 0,
-  });
-
-  useEffect(() => {
-    async function fetchStats() {
-      try {
-        const [projectsRes, skillsRes, messagesRes, experienceRes] = await Promise.allSettled([
-          fetch("/api/projects"),
-          fetch("/api/skills"),
-          fetch("/api/contact"),
-          fetch("/api/experience"),
-        ]);
-
-        setStats({
-          projects:
-            projectsRes.status === "fulfilled" && projectsRes.value.ok
-              ? (await projectsRes.value.json()).length
-              : 0,
-          skills:
-            skillsRes.status === "fulfilled" && skillsRes.value.ok
-              ? (await skillsRes.value.json()).length
-              : 0,
-          messages:
-            messagesRes.status === "fulfilled" && messagesRes.value.ok
-              ? (await messagesRes.value.json()).length
-              : 0,
-          experience:
-            experienceRes.status === "fulfilled" && experienceRes.value.ok
-              ? (await experienceRes.value.json()).length
-              : 0,
-        });
-      } catch {
-        /* silently fail */
-      }
-    }
-    fetchStats();
-  }, []);
+  const { data: stats, isLoading } = useDashboardStats();
 
   return (
     <div className="mx-auto max-w-6xl space-y-8">
@@ -58,12 +19,18 @@ export default function DashboardOverview() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatsCard title="Projects" value={stats.projects} icon={FolderKanban} />
-        <StatsCard title="Skills" value={stats.skills} icon={Wrench} />
-        <StatsCard title="Messages" value={stats.messages} icon={MessageSquare} />
-        <StatsCard title="Experiences" value={stats.experience} icon={Briefcase} />
-      </div>
+      {isLoading ? (
+        <div className="flex min-h-[20vh] items-center justify-center">
+          <Spinner size="lg" />
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatsCard title="Projects" value={stats?.projects ?? 0} icon={FolderKanban} />
+          <StatsCard title="Skills" value={stats?.skills ?? 0} icon={Wrench} />
+          <StatsCard title="Messages" value={stats?.messages ?? 0} icon={MessageSquare} />
+          <StatsCard title="Experiences" value={stats?.experience ?? 0} icon={Briefcase} />
+        </div>
+      )}
     </div>
   );
 }
