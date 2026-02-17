@@ -27,7 +27,7 @@ export default async function ProjectDetailPage({
     return (
       <div className="flex min-h-screen items-center justify-center pt-20">
         <GlassCard className="p-8 text-center">
-          <p className="text-[var(--color-text-muted)]">Project not found.</p>
+          <p className="text-text-muted">Project not found.</p>
           <Link
             href="/#projects"
             className="mt-4 inline-flex items-center gap-2 text-sm font-medium"
@@ -45,18 +45,18 @@ export default async function ProjectDetailPage({
       <div className="mx-auto max-w-4xl space-y-8">
         <Link
           href="/#projects"
-          className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-primary)]"
+          className="inline-flex items-center gap-2 text-sm font-medium text-text-muted hover:text-primary"
         >
           <ArrowLeft size={16} /> Back to projects
         </Link>
 
         <GlassCard className="p-8 md:p-12">
-          <h1 className="font-heading text-[length:var(--font-size-h1)] font-bold text-[var(--color-text-primary)]">
+          <h1 className="font-heading text-(length:--font-size-h1) font-bold text-(--color-text-primary)">
             {project.title}
           </h1>
 
           {project.company && (
-            <p className="mt-2 text-[var(--color-text-muted)]">{project.company}</p>
+            <p className="mt-2 text-text-muted">{project.company}</p>
           )}
 
           {project.thumbnailUrl && (
@@ -71,10 +71,10 @@ export default async function ProjectDetailPage({
 
           {project.fullDesc && (
             <div className="mt-8">
-              <h2 className="mb-3 font-heading text-xl font-semibold text-[var(--color-text-primary)]">
+              <h2 className="mb-3 font-heading text-xl font-semibold text-(--color-text-primary)">
                 About this project
               </h2>
-              <p className="text-[var(--color-text-secondary)] leading-relaxed">
+              <p className="text-text-secondary leading-relaxed">
                 {project.fullDesc}
               </p>
             </div>
@@ -82,24 +82,24 @@ export default async function ProjectDetailPage({
 
           {project.role && (
             <div className="mt-6">
-              <h2 className="mb-2 font-heading text-lg font-semibold text-[var(--color-text-primary)]">
+              <h2 className="mb-2 font-heading text-lg font-semibold text-(--color-text-primary)">
                 My Role
               </h2>
-              <p className="text-[var(--color-text-secondary)]">{project.role}</p>
+              <p className="text-text-secondary">{project.role}</p>
             </div>
           )}
 
           {project.challenges && (
             <div className="mt-6">
-              <h2 className="mb-2 font-heading text-lg font-semibold text-[var(--color-text-primary)]">
+              <h2 className="mb-2 font-heading text-lg font-semibold text-(--color-text-primary)">
                 Challenges & Solutions
               </h2>
-              <p className="text-[var(--color-text-secondary)]">{project.challenges}</p>
+              <p className="text-text-secondary">{project.challenges}</p>
             </div>
           )}
 
           <div className="mt-8">
-            <h2 className="mb-3 font-heading text-lg font-semibold text-[var(--color-text-primary)]">
+            <h2 className="mb-3 font-heading text-lg font-semibold text-(--color-text-primary)">
               Tech Stack
             </h2>
             <div className="flex flex-wrap gap-2">

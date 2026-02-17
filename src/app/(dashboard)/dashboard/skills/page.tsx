@@ -100,7 +100,7 @@ export default function SkillsDashboard() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-3xl font-bold text-[var(--color-text-primary)]">Skills</h1>
+        <h1 className="font-heading text-3xl font-bold text-(--color-text-primary)">Skills</h1>
         <Button variant="primary" onClick={openCreate}>
           <Plus size={16} /> Add Skill
         </Button>
@@ -118,19 +118,19 @@ export default function SkillsDashboard() {
               .map((skill) => (
                 <div
                   key={skill.id}
-                  className="flex items-center justify-between rounded-xl border border-[var(--color-surface-border)] bg-[var(--glass-bg)] px-4 py-3"
+                  className="flex items-center justify-between rounded-xl border border-surface-border bg-(--glass-bg) px-4 py-3"
                 >
-                  <span className="text-sm font-medium text-[var(--color-text-primary)]">{skill.name}</span>
+                  <span className="text-sm font-medium text-(--color-text-primary)">{skill.name}</span>
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => openEdit(skill)}
-                      className="rounded-lg p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
+                      className="rounded-lg p-1.5 text-text-muted hover:bg-surface hover:text-primary"
                     >
                       <Pencil size={14} />
                     </button>
                     <button
                       onClick={() => handleDelete(skill.id)}
-                      className="rounded-lg p-1.5 text-[var(--color-text-muted)] hover:bg-red-400/10 hover:text-red-400"
+                      className="rounded-lg p-1.5 text-text-muted hover:bg-red-400/10 hover:text-red-400"
                     >
                       <Trash2 size={14} />
                     </button>

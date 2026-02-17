@@ -59,7 +59,7 @@ export function SectionHeading({ title, subtitle, className }: SectionHeadingPro
   return (
     <div ref={headingRef} className={cn("mb-16 text-center", className)}>
       <h2
-        className="font-heading text-[length:var(--font-size-h1)] font-bold text-[var(--color-text-primary)]"
+        className="font-heading text-(length:--font-size-h1) font-bold text-(--color-text-primary)"
       >
         {title}
       </h2>
@@ -70,7 +70,7 @@ export function SectionHeading({ title, subtitle, className }: SectionHeadingPro
         }}
       />
       {subtitle && (
-        <p className="mx-auto mt-4 max-w-2xl text-[length:var(--font-size-body)] text-[var(--color-text-secondary)]">
+        <p className="mx-auto mt-4 max-w-2xl text-(length:--font-size-body) text-text-secondary">
           {subtitle}
         </p>
       )}

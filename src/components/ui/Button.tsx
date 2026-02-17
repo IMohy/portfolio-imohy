@@ -18,7 +18,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             "glass-btn": variant === "default",
             "glass-btn glass-btn-primary": variant === "primary",
-            "bg-transparent hover:bg-[var(--color-surface)] text-[var(--color-text-primary)]":
+            "bg-transparent hover:bg-surface text-(--color-text-primary)":
               variant === "ghost",
             "bg-red-500/80 hover:bg-red-500/90 text-white border border-red-400/30":
               variant === "danger",

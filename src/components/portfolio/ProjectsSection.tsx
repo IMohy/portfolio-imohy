@@ -57,7 +57,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
             subtitle="Featured work and side projects"
           />
           <div className="glass-card p-12 text-center">
-            <p className="text-[var(--color-text-muted)]">
+            <p className="text-text-muted">
               Projects will appear here once added via the admin dashboard.
             </p>
           </div>
@@ -82,8 +82,8 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                 onClick={() => setFilter(f)}
                 className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ${
                   filter === f
-                    ? "bg-[var(--color-primary)]/20 text-[var(--color-primary)] border border-[var(--color-primary)]/30"
-                    : "glass-btn text-[var(--color-text-secondary)]"
+                    ? "bg-primary/20 text-primary border border-primary/30"
+                    : "glass-btn text-text-secondary"
                 }`}
               >
                 {f}
@@ -120,27 +120,27 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
             )}
 
             {selected.fullDesc && (
-              <p className="text-[var(--color-text-secondary)]">
+              <p className="text-text-secondary">
                 {selected.fullDesc}
               </p>
             )}
 
             {selected.role && (
               <div>
-                <h4 className="mb-1 font-semibold text-[var(--color-text-primary)]">Role</h4>
-                <p className="text-sm text-[var(--color-text-secondary)]">{selected.role}</p>
+                <h4 className="mb-1 font-semibold text-(--color-text-primary)">Role</h4>
+                <p className="text-sm text-text-secondary">{selected.role}</p>
               </div>
             )}
 
             {selected.challenges && (
               <div>
-                <h4 className="mb-1 font-semibold text-[var(--color-text-primary)]">Challenges & Solutions</h4>
-                <p className="text-sm text-[var(--color-text-secondary)]">{selected.challenges}</p>
+                <h4 className="mb-1 font-semibold text-(--color-text-primary)">Challenges & Solutions</h4>
+                <p className="text-sm text-text-secondary">{selected.challenges}</p>
               </div>
             )}
 
             <div>
-              <h4 className="mb-2 font-semibold text-[var(--color-text-primary)]">Tech Stack</h4>
+              <h4 className="mb-2 font-semibold text-(--color-text-primary)">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
                 {selected.techStack.map((tech) => (
                   <Badge key={tech} variant="primary">{tech}</Badge>

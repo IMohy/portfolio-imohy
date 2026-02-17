@@ -59,11 +59,11 @@ export default function SettingsDashboard() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <h1 className="font-heading text-3xl font-bold text-[var(--color-text-primary)]">Settings</h1>
+      <h1 className="font-heading text-3xl font-bold text-(--color-text-primary)">Settings</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <GlassCard className="p-6 md:p-8">
-          <h2 className="mb-5 flex items-center gap-2 font-heading text-xl font-semibold text-[var(--color-text-primary)]">
+          <h2 className="mb-5 flex items-center gap-2 font-heading text-xl font-semibold text-(--color-text-primary)">
             <Globe size={20} style={{ color: "var(--color-primary)" }} /> General
           </h2>
           <div className="space-y-4">
@@ -74,23 +74,23 @@ export default function SettingsDashboard() {
         </GlassCard>
 
         <GlassCard className="p-6 md:p-8">
-          <h2 className="mb-5 flex items-center gap-2 font-heading text-xl font-semibold text-[var(--color-text-primary)]">
+          <h2 className="mb-5 flex items-center gap-2 font-heading text-xl font-semibold text-(--color-text-primary)">
             <Palette size={20} style={{ color: "var(--color-accent)" }} /> Colors
           </h2>
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-[var(--color-text-secondary)]">Primary Color (HSL)</h3>
+            <h3 className="text-sm font-medium text-text-secondary">Primary Color (HSL)</h3>
             <div className="grid gap-4 sm:grid-cols-3">
               <Input label="Hue (0-360)" type="number" {...register("primaryHue")} />
               <Input label="Saturation (0-100)" type="number" {...register("primarySat")} />
               <Input label="Lightness (0-100)" type="number" {...register("primaryLight")} />
             </div>
-            <h3 className="text-sm font-medium text-[var(--color-text-secondary)]">Secondary Color (HSL)</h3>
+            <h3 className="text-sm font-medium text-text-secondary">Secondary Color (HSL)</h3>
             <div className="grid gap-4 sm:grid-cols-3">
               <Input label="Hue" type="number" {...register("secondaryHue")} />
               <Input label="Saturation" type="number" {...register("secondarySat")} />
               <Input label="Lightness" type="number" {...register("secondaryLight")} />
             </div>
-            <h3 className="text-sm font-medium text-[var(--color-text-secondary)]">Accent Color (HSL)</h3>
+            <h3 className="text-sm font-medium text-text-secondary">Accent Color (HSL)</h3>
             <div className="grid gap-4 sm:grid-cols-3">
               <Input label="Hue" type="number" {...register("accentHue")} />
               <Input label="Saturation" type="number" {...register("accentSat")} />
@@ -100,7 +100,7 @@ export default function SettingsDashboard() {
         </GlassCard>
 
         <GlassCard className="p-6 md:p-8">
-          <h2 className="mb-5 flex items-center gap-2 font-heading text-xl font-semibold text-[var(--color-text-primary)]">
+          <h2 className="mb-5 flex items-center gap-2 font-heading text-xl font-semibold text-(--color-text-primary)">
             <Share2 size={20} style={{ color: "var(--color-secondary)" }} /> Social Links
           </h2>
           <div className="space-y-4">

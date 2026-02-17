@@ -55,12 +55,12 @@ export function Modal({ isOpen, onClose, title, children, className, size = "md"
       >
         {title && (
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-heading text-xl font-semibold text-[var(--color-text-primary)]">
+            <h2 className="font-heading text-xl font-semibold text-(--color-text-primary)">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="rounded-lg p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text-primary)] transition-colors"
+              className="rounded-lg p-1.5 text-text-muted hover:bg-surface hover:text-(--color-text-primary) transition-colors"
             >
               <X size={20} />
             </button>

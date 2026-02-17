@@ -152,8 +152,8 @@ export function SkillsSection({ data }: SkillsSectionProps) {
                 onClick={() => handleFilter(cat)}
                 className={`cat-tab rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ${
                   isActive
-                    ? "bg-[var(--color-primary)] text-white shadow-[0_2px_12px_rgba(0,0,0,0.2)]"
-                    : "border border-[var(--color-surface-border)] bg-[var(--glass-bg)] text-[var(--color-text-secondary)] backdrop-blur-sm hover:border-[var(--color-primary)]/30 hover:text-[var(--color-text-primary)]"
+                    ? "bg-primary text-white shadow-[0_2px_12px_rgba(0,0,0,0.2)]"
+                    : "border border-surface-border bg-(--glass-bg) text-text-secondary backdrop-blur-sm hover:border-primary/30 hover:text-(--color-text-primary)"
                 }`}
               >
                 {cat}
@@ -175,7 +175,7 @@ export function SkillsSection({ data }: SkillsSectionProps) {
             return (
               <div
                 key={skill.id}
-                className="skill-item group relative overflow-hidden rounded-xl border border-[var(--color-surface-border)] bg-[var(--glass-bg)] p-4 backdrop-blur-sm transition-all duration-300 hover:border-transparent hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
+                className="skill-item group relative overflow-hidden rounded-xl border border-surface-border bg-(--glass-bg) p-4 backdrop-blur-sm transition-all duration-300 hover:border-transparent hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
               >
                 {/* Top accent line */}
                 <div
@@ -201,7 +201,7 @@ export function SkillsSection({ data }: SkillsSectionProps) {
                         className="inline-block h-1.5 w-1.5 rounded-full"
                         style={{ backgroundColor: color }}
                       />
-                      <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-text-muted">
                         {skill.category}
                       </span>
                     </div>
@@ -214,7 +214,7 @@ export function SkillsSection({ data }: SkillsSectionProps) {
                         style={{ backgroundColor: color }}
                       />
                     )}
-                    <p className="text-sm font-semibold text-[var(--color-text-primary)]">
+                    <p className="text-sm font-semibold text-(--color-text-primary)">
                       {skill.name}
                     </p>
                   </div>

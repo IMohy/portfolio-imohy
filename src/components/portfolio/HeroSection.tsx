@@ -97,7 +97,7 @@ export function HeroSection({ data, settings }: HeroSectionProps) {
       className="relative flex min-h-screen flex-col items-center justify-start px-6 pt-18"
     >
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <div ref={logoRef} className="flex justify-center text-[var(--color-text-primary)]">
+        <div ref={logoRef} className="flex justify-center text-(--color-text-primary)">
           <Logo size={220} />
         </div>
         <h1
@@ -110,7 +110,7 @@ export function HeroSection({ data, settings }: HeroSectionProps) {
 
         <p
           ref={subtitleRef}
-          className="text-[length:var(--font-size-h2)] font-medium"
+          className="text-(length:--font-size-h2) font-medium"
           style={{
             background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
             WebkitBackgroundClip: 'text',
@@ -122,14 +122,14 @@ export function HeroSection({ data, settings }: HeroSectionProps) {
 
         <p
           ref={taglineRef}
-          className="mx-auto mt-4 max-w-2xl text-[length:var(--font-size-body)] text-[var(--color-text-secondary)]"
+          className="mx-auto mt-4 max-w-2xl text-(length:--font-size-body) text-text-secondary"
         >
           {tagline}
         </p>
 
         <div ref={infoRef} className="mt-6 flex flex-wrap items-center justify-center gap-6">
           {quickInfo.map((item) => (
-            <div key={item.text} className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+            <div key={item.text} className="flex items-center gap-2 text-sm text-text-muted">
               <item.icon size={15} style={{ color: 'var(--color-primary)' }} />
               <span>{item.text}</span>
             </div>
@@ -179,7 +179,7 @@ export function HeroSection({ data, settings }: HeroSectionProps) {
               href={link.href}
               target={link.href.startsWith('mailto') ? undefined : '_blank'}
               rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-              className="flex h-10 w-10 items-center justify-center rounded-xl text-[var(--color-text-muted)] transition-all duration-200 hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)] glass"
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-text-muted transition-all duration-200 hover:bg-surface hover:text-primary glass"
               aria-label={link.label}
             >
               <link.icon size={18} />
@@ -195,7 +195,7 @@ export function HeroSection({ data, settings }: HeroSectionProps) {
             e.preventDefault();
             document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="flex flex-col items-center gap-1 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-primary)]"
+          className="flex flex-col items-center gap-1 text-text-muted transition-colors hover:text-primary"
         >
           <ScrollMouseIcon className="scroll-mouse-svg" />
           <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] opacity-50">scroll</span>

@@ -67,10 +67,10 @@ export function ContactSection({ settings }: ContactSectionProps) {
         />
 
         {/* Compact info row */}
-        <div className="mb-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-[var(--color-text-muted)]">
+        <div className="mb-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-text-muted">
           <button
             onClick={copyEmail}
-            className="flex items-center gap-2 rounded-lg px-3 py-1.5 transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
+            className="flex items-center gap-2 rounded-lg px-3 py-1.5 transition-all hover:bg-surface hover:text-primary"
           >
             <Mail size={15} style={{ color: "var(--color-primary)" }} />
             <span>mohy.web@gmail.com</span>
@@ -90,7 +90,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-8 w-8 items-center justify-center rounded-lg transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
+              className="flex h-8 w-8 items-center justify-center rounded-lg transition-all hover:bg-surface hover:text-primary"
               aria-label={label}
             >
               <Icon size={16} />

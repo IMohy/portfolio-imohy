@@ -60,17 +60,17 @@ export default function MediaDashboard() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-3xl font-bold text-[var(--color-text-primary)]">Media Library</h1>
+        <h1 className="font-heading text-3xl font-bold text-(--color-text-primary)">Media Library</h1>
       </div>
 
       <GlassCard className="p-8">
-        <label className="flex cursor-pointer flex-col items-center gap-4 rounded-xl border-2 border-dashed border-[var(--color-surface-border)] p-8 transition-colors hover:border-[var(--color-primary)]/50">
-          <Upload size={32} className="text-[var(--color-text-muted)]" />
+        <label className="flex cursor-pointer flex-col items-center gap-4 rounded-xl border-2 border-dashed border-surface-border p-8 transition-colors hover:border-primary/50">
+          <Upload size={32} className="text-text-muted" />
           <div className="text-center">
-            <p className="font-medium text-[var(--color-text-secondary)]">
+            <p className="font-medium text-text-secondary">
               {uploading ? "Uploading..." : "Click to upload files"}
             </p>
-            <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+            <p className="mt-1 text-sm text-text-muted">
               Images, documents, etc.
             </p>
           </div>
@@ -90,7 +90,7 @@ export default function MediaDashboard() {
           {uploads.map((file) => (
             <GlassCard key={file.url} className="overflow-hidden p-0">
               {file.mimeType.startsWith("image/") && (
-                <div className="h-40 bg-[var(--color-surface)]">
+                <div className="h-40 bg-surface">
                   <img
                     src={file.url}
                     alt={file.filename}
@@ -99,10 +99,10 @@ export default function MediaDashboard() {
                 </div>
               )}
               <div className="p-4">
-                <p className="truncate text-sm font-medium text-[var(--color-text-primary)]">
+                <p className="truncate text-sm font-medium text-(--color-text-primary)">
                   {file.filename}
                 </p>
-                <p className="text-xs text-[var(--color-text-muted)]">
+                <p className="text-xs text-text-muted">
                   {(file.size / 1024).toFixed(1)} KB
                 </p>
                 <div className="mt-3 flex items-center gap-2">
@@ -112,7 +112,7 @@ export default function MediaDashboard() {
                   </Button>
                   <button
                     onClick={() => removeFromList(file.url)}
-                    className="rounded-lg p-1.5 text-[var(--color-text-muted)] hover:bg-red-400/10 hover:text-red-400"
+                    className="rounded-lg p-1.5 text-text-muted hover:bg-red-400/10 hover:text-red-400"
                   >
                     <Trash2 size={14} />
                   </button>

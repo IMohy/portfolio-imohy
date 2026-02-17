@@ -26,8 +26,8 @@ const projectFormSchema = z.object({
   challenges: z.string().optional(),
   liveUrl: z.string().optional(),
   repoUrl: z.string().optional(),
-  featured: z.boolean().default(false),
-  order: z.number().int().default(0),
+  featured: z.boolean(),
+  order: z.number().int(),
 });
 
 type ProjectForm = z.infer<typeof projectFormSchema>;
@@ -80,10 +80,10 @@ export default function NewProjectPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/dashboard/projects" className="rounded-lg p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface)]">
+        <Link href="/dashboard/projects" className="rounded-lg p-2 text-text-muted hover:bg-surface">
           <ArrowLeft size={20} />
         </Link>
-        <h1 className="font-heading text-3xl font-bold text-[var(--color-text-primary)]">New Project</h1>
+        <h1 className="font-heading text-3xl font-bold text-(--color-text-primary)">New Project</h1>
       </div>
 
       <GlassCard className="p-6 md:p-8">
@@ -106,7 +106,7 @@ export default function NewProjectPage() {
           </div>
           <Input label="Thumbnail URL" {...register("thumbnailUrl")} />
           <div className="flex items-center gap-3">
-            <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+            <label className="flex items-center gap-2 text-sm text-text-secondary">
               <input type="checkbox" className="rounded" {...register("featured")} />
               Featured project
             </label>

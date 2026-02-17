@@ -23,8 +23,8 @@ export function StatsCard({ title, value, icon: Icon, color }: StatsCardProps) {
         />
       </div>
       <div>
-        <p className="text-2xl font-bold text-[var(--color-text-primary)]">{value}</p>
-        <p className="text-sm text-[var(--color-text-muted)]">{title}</p>
+        <p className="text-2xl font-bold text-(--color-text-primary)">{value}</p>
+        <p className="text-sm text-text-muted">{title}</p>
       </div>
     </GlassCard>
   );

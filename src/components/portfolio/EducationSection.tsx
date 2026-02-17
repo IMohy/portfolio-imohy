@@ -98,13 +98,13 @@ export function EducationSection({ education, certifications }: EducationSection
                   <GraduationCap size={22} style={{ color: "var(--color-primary)" }} />
                 </div>
 
-                <div className="flex-1 rounded-xl border border-[var(--color-surface-border)] bg-[var(--glass-bg)] p-5 backdrop-blur-md transition-all duration-300 group-hover:border-[var(--color-primary)]/20 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.1)]">
+                <div className="flex-1 rounded-xl border border-surface-border bg-(--glass-bg) p-5 backdrop-blur-md transition-all duration-300 group-hover:border-primary/20 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.1)]">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-heading text-base font-semibold text-[var(--color-text-primary)]">
+                      <h3 className="font-heading text-base font-semibold text-(--color-text-primary)">
                         {item.degree} in {item.field}
                       </h3>
-                      <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+                      <p className="mt-1 text-sm text-text-secondary">
                         {item.institution}
                       </p>
                     </div>
@@ -117,7 +117,7 @@ export function EducationSection({ education, certifications }: EducationSection
                     </div>
                   </div>
                   {item.graduationDate && (
-                    <p className="mt-2 text-xs text-[var(--color-text-muted)]">
+                    <p className="mt-2 text-xs text-text-muted">
                       Graduated {formatDate(item.graduationDate)}
                     </p>
                   )}
@@ -145,13 +145,13 @@ export function EducationSection({ education, certifications }: EducationSection
                   <Award size={22} style={{ color: "var(--color-accent)" }} />
                 </div>
 
-                <div className="flex-1 rounded-xl border border-[var(--color-surface-border)] bg-[var(--glass-bg)] p-5 backdrop-blur-md transition-all duration-300 group-hover:border-[var(--color-accent)]/20 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.1)]">
+                <div className="flex-1 rounded-xl border border-surface-border bg-(--glass-bg) p-5 backdrop-blur-md transition-all duration-300 group-hover:border-accent/20 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.1)]">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-heading text-base font-semibold text-[var(--color-text-primary)]">
+                      <h3 className="font-heading text-base font-semibold text-(--color-text-primary)">
                         {cert.title}
                       </h3>
-                      <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+                      <p className="mt-1 text-sm text-text-secondary">
                         {cert.issuer}
                       </p>
                     </div>
@@ -165,7 +165,7 @@ export function EducationSection({ education, certifications }: EducationSection
                   </div>
                   <div className="mt-2 flex items-center gap-3">
                     {cert.issueDate && (
-                      <span className="text-xs text-[var(--color-text-muted)]">
+                      <span className="text-xs text-text-muted">
                         Issued {formatDate(cert.issueDate)}
                       </span>
                     )}

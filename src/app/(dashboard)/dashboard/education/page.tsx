@@ -175,7 +175,7 @@ export default function EducationDashboard() {
   return (
     <div className="mx-auto max-w-4xl space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-3xl font-bold text-[var(--color-text-primary)]">Education</h1>
+        <h1 className="font-heading text-3xl font-bold text-(--color-text-primary)">Education</h1>
         <div className="flex gap-2">
           <Button variant="primary" onClick={openCreateEdu}>
             <Plus size={16} /> Education
@@ -187,21 +187,21 @@ export default function EducationDashboard() {
       </div>
 
       <div>
-        <h2 className="mb-4 flex items-center gap-2 font-heading text-xl font-semibold text-[var(--color-text-primary)]">
+        <h2 className="mb-4 flex items-center gap-2 font-heading text-xl font-semibold text-(--color-text-primary)">
           <GraduationCap size={20} style={{ color: "var(--color-primary)" }} /> Education
         </h2>
         <div className="space-y-3">
           {education.map((edu) => (
             <GlassCard key={edu.id} className="flex items-center justify-between p-5">
               <div>
-                <h3 className="font-semibold text-[var(--color-text-primary)]">{edu.degree} in {edu.field}</h3>
-                <p className="text-sm text-[var(--color-text-muted)]">{edu.institution}</p>
+                <h3 className="font-semibold text-(--color-text-primary)">{edu.degree} in {edu.field}</h3>
+                <p className="text-sm text-text-muted">{edu.institution}</p>
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => openEditEdu(edu)} className="rounded-lg p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
+                <button onClick={() => openEditEdu(edu)} className="rounded-lg p-2 text-text-muted hover:bg-surface hover:text-primary">
                   <Pencil size={14} />
                 </button>
-                <button onClick={() => handleDelete(edu.id, "education")} className="rounded-lg p-2 text-[var(--color-text-muted)] hover:bg-red-400/10 hover:text-red-400">
+                <button onClick={() => handleDelete(edu.id, "education")} className="rounded-lg p-2 text-text-muted hover:bg-red-400/10 hover:text-red-400">
                   <Trash2 size={14} />
                 </button>
               </div>
@@ -211,21 +211,21 @@ export default function EducationDashboard() {
       </div>
 
       <div>
-        <h2 className="mb-4 flex items-center gap-2 font-heading text-xl font-semibold text-[var(--color-text-primary)]">
+        <h2 className="mb-4 flex items-center gap-2 font-heading text-xl font-semibold text-(--color-text-primary)">
           <Award size={20} style={{ color: "var(--color-accent)" }} /> Certifications
         </h2>
         <div className="space-y-3">
           {certifications.map((cert) => (
             <GlassCard key={cert.id} className="flex items-center justify-between p-5">
               <div>
-                <h3 className="font-semibold text-[var(--color-text-primary)]">{cert.title}</h3>
-                <p className="text-sm text-[var(--color-text-muted)]">{cert.issuer}</p>
+                <h3 className="font-semibold text-(--color-text-primary)">{cert.title}</h3>
+                <p className="text-sm text-text-muted">{cert.issuer}</p>
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => openEditCert(cert)} className="rounded-lg p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
+                <button onClick={() => openEditCert(cert)} className="rounded-lg p-2 text-text-muted hover:bg-surface hover:text-primary">
                   <Pencil size={14} />
                 </button>
-                <button onClick={() => handleDelete(cert.id, "certification")} className="rounded-lg p-2 text-[var(--color-text-muted)] hover:bg-red-400/10 hover:text-red-400">
+                <button onClick={() => handleDelete(cert.id, "certification")} className="rounded-lg p-2 text-text-muted hover:bg-red-400/10 hover:text-red-400">
                   <Trash2 size={14} />
                 </button>
               </div>

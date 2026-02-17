@@ -96,7 +96,7 @@ export function AboutSection({ data }: AboutSectionProps) {
           <div className="flex flex-col items-center gap-8 md:flex-row md:items-start">
             {about.photoUrl && (
               <div className="shrink-0">
-                <div className="relative h-40 w-40 overflow-hidden rounded-2xl border-2 border-[var(--color-primary)]/20 shadow-lg shadow-[var(--color-primary)]/10">
+                <div className="relative h-40 w-40 overflow-hidden rounded-2xl border-2 border-primary/20 shadow-lg shadow-primary/10">
                   <img
                     src={about.photoUrl}
                     alt="Mohamed Mohy"
@@ -106,7 +106,7 @@ export function AboutSection({ data }: AboutSectionProps) {
               </div>
             )}
             <div className="flex-1 text-center md:text-left">
-              <p className="text-[length:var(--font-size-body)] leading-relaxed text-[var(--color-text-secondary)]">
+              <p className="text-(length:--font-size-body) leading-relaxed text-text-secondary">
                 {about.summary}
               </p>
             </div>
@@ -127,12 +127,12 @@ export function AboutSection({ data }: AboutSectionProps) {
               <div className="relative z-10 flex flex-col items-center gap-3">
                 {(() => { const Icon = statIcons[stat.type]; return <Icon />; })()}
                 <span
-                  className="stat-number font-heading text-3xl font-bold text-[var(--color-text-primary)]"
+                  className="stat-number font-heading text-3xl font-bold text-(--color-text-primary)"
                   data-target={stat.value}
                 >
                   0+
                 </span>
-                <span className="text-sm text-[var(--color-text-muted)]">{stat.label}</span>
+                <span className="text-sm text-text-muted">{stat.label}</span>
               </div>
             </div>
           ))}

@@ -24,7 +24,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
               alt={project.title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
           </div>
         ) : (
           <div
@@ -33,22 +33,22 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
               background: `linear-gradient(135deg, hsla(var(--color-primary-h), 60%, 50%, 0.2), hsla(var(--color-secondary-h), 50%, 50%, 0.2))`,
             }}
           >
-            <span className="font-heading text-2xl font-bold text-[var(--color-text-muted)]">
+            <span className="font-heading text-2xl font-bold text-text-muted">
               {project.title.charAt(0)}
             </span>
           </div>
         )}
 
         <div className="p-5">
-          <h3 className="font-heading text-lg font-semibold text-[var(--color-text-primary)]">
+          <h3 className="font-heading text-lg font-semibold text-(--color-text-primary)">
             {project.title}
           </h3>
           {project.company && (
-            <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+            <p className="mt-1 text-sm text-text-muted">
               {project.company}
             </p>
           )}
-          <p className="mt-2 line-clamp-2 text-sm text-[var(--color-text-secondary)]">
+          <p className="mt-2 line-clamp-2 text-sm text-text-secondary">
             {project.shortDesc}
           </p>
 
@@ -65,13 +65,13 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 border-t border-[var(--color-surface-border)] px-5 py-3">
+      <div className="flex items-center gap-2 border-t border-surface-border px-5 py-3">
         {project.liveUrl && (
           <a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-primary)]"
+            className="flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-primary"
             onClick={(e) => e.stopPropagation()}
           >
             <ExternalLink size={14} />
@@ -83,7 +83,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
             href={project.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
+            className="flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-(--color-text-primary)"
             onClick={(e) => e.stopPropagation()}
           >
             <Github size={14} />

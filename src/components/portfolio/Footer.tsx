@@ -32,11 +32,11 @@ export function Footer({ settings }: FooterProps) {
 
   return (
     <footer className="relative pb-6 px-3 sm:px-4">
-      <div className="mx-auto max-w-5xl rounded-2xl border border-white/[0.08] bg-[var(--color-bg)]/60 px-6 py-8 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-xl backdrop-saturate-[1.8]">
+      <div className="mx-auto max-w-5xl rounded-2xl border border-white/8 bg-(--color-bg)/60 px-6 py-8 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-xl backdrop-saturate-[1.8]">
         <div className="flex flex-col items-center gap-5">
           <a
             href="#home"
-            className="flex items-center text-[var(--color-text-primary)]"
+            className="flex items-center text-(--color-text-primary)"
             onClick={(e) => {
               e.preventDefault();
               scrollToTop();
@@ -50,7 +50,7 @@ export function Footer({ settings }: FooterProps) {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
+                className="text-sm text-text-muted transition-colors hover:text-(--color-text-primary)"
               >
                 {link.label}
               </a>
@@ -65,7 +65,7 @@ export function Footer({ settings }: FooterProps) {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--color-text-muted)] transition-all hover:bg-white/[0.06] hover:text-[var(--color-primary)]"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-text-muted transition-all hover:bg-white/6 hover:text-primary"
                   aria-label={label}
                 >
                   <Icon size={16} />
@@ -74,7 +74,7 @@ export function Footer({ settings }: FooterProps) {
             </div>
           )}
 
-          <p className="text-center text-xs text-[var(--color-text-muted)]">
+          <p className="text-center text-xs text-text-muted">
             Designed & Built by Mohamed Mohy &copy; {year}
           </p>
         </div>
@@ -82,7 +82,7 @@ export function Footer({ settings }: FooterProps) {
 
       <button
         onClick={scrollToTop}
-        className="glass fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full text-[var(--color-text-muted)] transition-all hover:text-[var(--color-primary)] hover:scale-110"
+        className="glass fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full text-text-muted transition-all hover:text-primary hover:scale-110"
         aria-label="Back to top"
       >
         <ArrowUp size={18} />

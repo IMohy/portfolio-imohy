@@ -50,10 +50,10 @@ function LoginForm() {
           >
             <Lock size={28} style={{ color: "var(--color-primary)" }} />
           </div>
-          <h1 className="font-heading text-2xl font-bold text-[var(--color-text-primary)]">
+          <h1 className="font-heading text-2xl font-bold text-(--color-text-primary)">
             Admin Dashboard
           </h1>
-          <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+          <p className="mt-1 text-sm text-text-muted">
             Sign in to manage your portfolio
           </p>
         </div>

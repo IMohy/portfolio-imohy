@@ -24,7 +24,7 @@ const experienceFormSchema = z.object({
   startDate: z.string().min(1, "Start date is required"),
   endDate: z.string().optional(),
   description: z.string().min(1, "Description is required"),
-  order: z.number().int().default(0),
+  order: z.number().int(),
 });
 
 type ExperienceForm = z.infer<typeof experienceFormSchema>;
@@ -129,7 +129,7 @@ export default function ExperienceDashboard() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-3xl font-bold text-[var(--color-text-primary)]">Experience</h1>
+        <h1 className="font-heading text-3xl font-bold text-(--color-text-primary)">Experience</h1>
         <Button variant="primary" onClick={openCreate}>
           <Plus size={16} /> Add Experience
         </Button>
@@ -140,11 +140,11 @@ export default function ExperienceDashboard() {
           <GlassCard key={exp.id} className="p-6">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-heading text-lg font-semibold text-[var(--color-text-primary)]">
+                <h3 className="font-heading text-lg font-semibold text-(--color-text-primary)">
                   {exp.company}
                 </h3>
-                <p className="text-sm text-[var(--color-text-secondary)]">{exp.title}</p>
-                <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-[var(--color-text-muted)]">
+                <p className="text-sm text-text-secondary">{exp.title}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-text-muted">
                   <span className="flex items-center gap-1">
                     <Calendar size={12} />
                     {formatDate(exp.startDate)} — {exp.endDate ? formatDate(exp.endDate) : "Present"}
@@ -156,10 +156,10 @@ export default function ExperienceDashboard() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => openEdit(exp)} className="rounded-lg p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
+                <button onClick={() => openEdit(exp)} className="rounded-lg p-2 text-text-muted hover:bg-surface hover:text-primary">
                   <Pencil size={16} />
                 </button>
-                <button onClick={() => handleDelete(exp.id)} className="rounded-lg p-2 text-[var(--color-text-muted)] hover:bg-red-400/10 hover:text-red-400">
+                <button onClick={() => handleDelete(exp.id)} className="rounded-lg p-2 text-text-muted hover:bg-red-400/10 hover:text-red-400">
                   <Trash2 size={16} />
                 </button>
               </div>

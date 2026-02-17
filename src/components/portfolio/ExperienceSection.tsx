@@ -180,17 +180,17 @@ export function ExperienceSection({ data }: ExperienceSectionProps) {
                       <GlassCard className="p-6" glow>
                         <div className="mb-3 flex flex-wrap items-center gap-2">
                           <Building2 size={16} style={{ color: "var(--color-primary)" }} />
-                          <h3 className="font-heading text-lg font-semibold text-[var(--color-text-primary)]">
+                          <h3 className="font-heading text-lg font-semibold text-(--color-text-primary)">
                             {exp.company}
                           </h3>
                           <Badge variant="primary">{exp.workType}</Badge>
                         </div>
 
-                        <p className="text-base font-medium text-[var(--color-text-secondary)]">
+                        <p className="text-base font-medium text-text-secondary">
                           {exp.title}
                         </p>
 
-                        <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-[var(--color-text-muted)]">
+                        <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-text-muted">
                           <span className="flex items-center gap-1">
                             <Calendar size={14} />
                             {formatDate(exp.startDate)} &mdash; {exp.endDate ? formatDate(exp.endDate) : "Present"}
@@ -205,7 +205,7 @@ export function ExperienceSection({ data }: ExperienceSectionProps) {
                           {exp.description.map((bullet, j) => (
                             <li
                               key={j}
-                              className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"
+                              className="flex items-start gap-2 text-sm text-text-secondary"
                             >
                               <span
                                 className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"

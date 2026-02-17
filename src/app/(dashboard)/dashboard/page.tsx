@@ -50,10 +50,10 @@ export default function DashboardOverview() {
   return (
     <div className="mx-auto max-w-6xl space-y-8">
       <div>
-        <h1 className="font-heading text-3xl font-bold text-[var(--color-text-primary)]">
+        <h1 className="font-heading text-3xl font-bold text-(--color-text-primary)">
           Dashboard
         </h1>
-        <p className="mt-1 text-[var(--color-text-muted)]">
+        <p className="mt-1 text-text-muted">
           Welcome back! Here&apos;s an overview of your portfolio.
         </p>
       </div>

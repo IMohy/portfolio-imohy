@@ -29,7 +29,7 @@ export const skillSchema = z.object({
   name: z.string().min(1),
   icon: z.string().optional(),
   category: z.string().min(1),
-  order: z.number().int().default(0),
+  order: z.number().int(),
 });
 
 export const experienceSchema = z.object({
@@ -41,7 +41,7 @@ export const experienceSchema = z.object({
   startDate: z.string(),
   endDate: z.string().optional(),
   description: z.array(z.string()),
-  order: z.number().int().default(0),
+  order: z.number().int(),
 });
 
 export const projectSchema = z.object({
@@ -50,15 +50,15 @@ export const projectSchema = z.object({
   shortDesc: z.string().min(1),
   fullDesc: z.string().optional(),
   thumbnailUrl: z.string().optional(),
-  screenshots: z.array(z.string()).default([]),
-  techStack: z.array(z.string()).default([]),
+  screenshots: z.array(z.string()),
+  techStack: z.array(z.string()),
   company: z.string().optional(),
   role: z.string().optional(),
   challenges: z.string().optional(),
   liveUrl: z.string().optional(),
   repoUrl: z.string().optional(),
-  featured: z.boolean().default(false),
-  order: z.number().int().default(0),
+  featured: z.boolean(),
+  order: z.number().int(),
 });
 
 export const educationSchema = z.object({
@@ -67,7 +67,7 @@ export const educationSchema = z.object({
   field: z.string().min(1),
   graduationDate: z.string().optional(),
   logoUrl: z.string().optional(),
-  order: z.number().int().default(0),
+  order: z.number().int(),
 });
 
 export const certificationSchema = z.object({
@@ -76,7 +76,7 @@ export const certificationSchema = z.object({
   issueDate: z.string().optional(),
   credUrl: z.string().optional(),
   logoUrl: z.string().optional(),
-  order: z.number().int().default(0),
+  order: z.number().int(),
 });
 
 export const settingsSchema = z.object({

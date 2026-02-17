@@ -51,12 +51,12 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
       <aside
         className={cn(
-          "fixed left-0 top-0 z-50 flex h-full w-64 flex-col border-r border-[var(--color-surface-border)] transition-transform duration-300 lg:translate-x-0",
+          "fixed left-0 top-0 z-50 flex h-full w-64 flex-col border-r border-surface-border transition-transform duration-300 lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
           "glass"
         )}
       >
-        <div className="flex items-center justify-between border-b border-[var(--color-surface-border)] px-6 py-5">
+        <div className="flex items-center justify-between border-b border-surface-border px-6 py-5">
           <Link
             href="/dashboard"
             className="font-heading text-xl font-bold"
@@ -66,7 +66,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           </Link>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] lg:hidden"
+            className="rounded-lg p-1 text-text-muted hover:bg-surface lg:hidden"
           >
             <X size={20} />
           </button>
@@ -86,8 +86,8 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                   className={cn(
                     "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
-                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text-primary)]"
+                      ? "bg-primary/10 text-primary"
+                      : "text-text-secondary hover:bg-surface hover:text-(--color-text-primary)"
                   )}
                 >
                   <item.icon size={18} />
@@ -98,7 +98,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           </div>
         </nav>
 
-        <div className="border-t border-[var(--color-surface-border)] p-3">
+        <div className="border-t border-surface-border p-3">
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
             className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-red-400 transition-colors hover:bg-red-400/10"
