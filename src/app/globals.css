@@ -1,26 +1,274 @@
 @import "tailwindcss";
 
+/* ========== CSS Custom Properties ========== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary-h: 199;
+  --color-primary-s: 89%;
+  --color-primary-l: 48%;
+  --color-primary: hsl(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l));
+  --color-primary-light: hsl(var(--color-primary-h), var(--color-primary-s), 65%);
+  --color-primary-dark: hsl(var(--color-primary-h), var(--color-primary-s), 35%);
+
+  --color-secondary-h: 166;
+  --color-secondary-s: 72%;
+  --color-secondary-l: 50%;
+  --color-secondary: hsl(var(--color-secondary-h), var(--color-secondary-s), var(--color-secondary-l));
+  --color-secondary-light: hsl(var(--color-secondary-h), var(--color-secondary-s), 70%);
+  --color-secondary-dark: hsl(var(--color-secondary-h), var(--color-secondary-s), 35%);
+
+  --color-accent-h: 34;
+  --color-accent-s: 100%;
+  --color-accent-l: 60%;
+  --color-accent: hsl(var(--color-accent-h), var(--color-accent-s), var(--color-accent-l));
+
+  --color-bg: #eef2f7;
+  --color-surface: rgba(255, 255, 255, 0.25);
+  --color-surface-hover: rgba(255, 255, 255, 0.40);
+  --color-surface-border: rgba(255, 255, 255, 0.45);
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+
+  --glass-blur: 20px;
+  --glass-saturation: 180%;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+
+  --orb-color-1: hsl(var(--color-primary-h), 80%, 75%);
+  --orb-color-2: hsl(var(--color-secondary-h), 70%, 70%);
+  --orb-color-3: hsl(var(--color-accent-h), 90%, 75%);
+
+  --font-size-hero: clamp(3rem, 8vw, 6rem);
+  --font-size-h1: clamp(2rem, 4vw, 3.5rem);
+  --font-size-h2: clamp(1.5rem, 3vw, 2.25rem);
+  --font-size-h3: clamp(1.125rem, 2vw, 1.5rem);
+  --font-size-body: clamp(0.95rem, 1.2vw, 1.125rem);
+  --font-size-small: clamp(0.8rem, 1vw, 0.875rem);
+  --font-size-code: 0.875rem;
 }
 
+[data-theme="dark"] {
+  --color-bg: #090d16;
+  --color-surface: rgba(255, 255, 255, 0.06);
+  --color-surface-hover: rgba(255, 255, 255, 0.10);
+  --color-surface-border: rgba(255, 255, 255, 0.12);
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  --glass-blur: 24px;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  --orb-color-1: hsl(var(--color-primary-h), 90%, 55%);
+  --orb-color-2: hsl(var(--color-secondary-h), 80%, 50%);
+  --orb-color-3: hsl(var(--color-accent-h), 95%, 55%);
+}
+
+/* ========== Tailwind Theme ========== */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text-primary);
+  --color-primary: var(--color-primary);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-light: var(--color-secondary-light);
+  --color-secondary-dark: var(--color-secondary-dark);
+  --color-accent: var(--color-accent);
+  --color-surface: var(--color-surface);
+  --color-surface-hover: var(--color-surface-hover);
+  --color-surface-border: var(--color-surface-border);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --font-heading: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ========== Base Styles ========== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+[data-theme="dark"] body {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, hsla(var(--color-primary-h), 50%, 12%, 0.5), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, hsla(var(--color-secondary-h), 35%, 10%, 0.25), transparent 50%),
+    var(--color-bg);
+}
+
+:root body {
+  background:
+    radial-gradient(ellipse 80% 40% at 15% 0%, hsla(var(--color-primary-h), 55%, 88%, 0.3), transparent 45%),
+    radial-gradient(ellipse 50% 35% at 90% 100%, hsla(var(--color-secondary-h), 45%, 85%, 0.2), transparent 45%),
+    var(--color-bg);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* ========== Glass Utilities ========== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: var(--color-surface-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .glass-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.glass-input {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid var(--color-surface-border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--color-text-primary);
+  transition: all 0.3s ease;
+  outline: none;
+  width: 100%;
+}
+
+.glass-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), 0.15);
+}
+
+.glass-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.glass-btn {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid var(--color-surface-border);
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.5rem;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.glass-btn:hover {
+  background: var(--color-surface-hover);
+  transform: translateY(-1px);
+}
+
+.glass-btn-primary {
+  background: linear-gradient(
+    135deg,
+    hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), 0.8),
+    hsla(var(--color-primary-h), var(--color-primary-s), calc(var(--color-primary-l) - 10%), 0.9)
+  );
+  color: white;
+  border: 1px solid hsla(var(--color-primary-h), var(--color-primary-s), 70%, 0.3);
+  box-shadow: 0 4px 15px hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), 0.3);
+}
+
+.glass-btn-primary:hover {
+  box-shadow: 0 6px 20px hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), 0.5);
+  background: linear-gradient(
+    135deg,
+    hsla(var(--color-primary-h), var(--color-primary-s), calc(var(--color-primary-l) + 5%), 0.9),
+    hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), 1)
+  );
+}
+
+/* ========== Scrollbar ========== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ========== Scroll Progress ========== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* ========== Section Styles ========== */
+.section-padding {
+  padding: 4rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 6rem 2rem;
+  }
+}
+
+/* ========== Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

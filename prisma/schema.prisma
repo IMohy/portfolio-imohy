@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id              String   @id @default("settings")
+  siteTitle       String   @default("Mohamed Mohy — Frontend Developer")
+  metaDescription String   @default("")
+  primaryHue      Int      @default(199)
+  primarySat      Int      @default(89)
+  primaryLight    Int      @default(48)
+  secondaryHue    Int      @default(166)
+  secondarySat    Int      @default(72)
+  secondaryLight  Int      @default(50)
+  accentHue       Int      @default(34)
+  accentSat       Int      @default(100)
+  accentLight     Int      @default(60)
+  defaultTheme    String   @default("dark")
+  githubUrl       String   @default("")
+  linkedinUrl     String   @default("")
+  twitterUrl      String   @default("")
+  updatedAt       DateTime @updatedAt
+}
+
+model Hero {
+  id               String   @id @default(cuid())
+  headline         String   @default("Mohamed Mohy")
+  subtitle         String   @default("Frontend Web Developer")
+  tagline          String   @default("Building modern, responsive, and user-focused web applications")
+  ctaPrimaryText   String   @default("View My Work")
+  ctaSecondaryText String   @default("Get In Touch")
+  resumeUrl        String?
+  backgroundUrl    String?
+  updatedAt        DateTime @updatedAt
+}
+
+model About {
+  id             String   @id @default(cuid())
+  summary        String   @db.Text
+  photoUrl       String?
+  yearsExp       Int      @default(3)
+  totalProjects  Int      @default(20)
+  totalCompanies Int      @default(5)
+  updatedAt      DateTime @updatedAt
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  name      String
+  icon      String?
+  category  String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Experience {
+  id          String    @id @default(cuid())
+  company     String
+  companyLogo String?
+  title       String
+  location    String
+  workType    String
+  startDate   DateTime
+  endDate     DateTime?
+  description String[]
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  shortDesc    String
+  fullDesc     String?  @db.Text
+  thumbnailUrl String?
+  screenshots  String[]
+  techStack    String[]
+  company      String?
+  role         String?
+  challenges   String?  @db.Text
+  liveUrl      String?
+  repoUrl      String?
+  featured     Boolean  @default(false)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Education {
+  id             String    @id @default(cuid())
+  institution    String
+  degree         String
+  field          String
+  graduationDate DateTime?
+  logoUrl        String?
+  order          Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Certification {
+  id        String    @id @default(cuid())
+  title     String
+  issuer    String
+  issueDate DateTime?
+  credUrl   String?
+  logoUrl   String?
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  filename  String
+  mimeType  String
+  size      Int
+  alt       String?
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
