@@ -98,7 +98,7 @@ export function HeroSection({ data, settings }: HeroSectionProps) {
     >
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         <div ref={logoRef} className="flex justify-center text-(--color-text-primary)">
-          <Logo size={220} />
+          <Logo size={160} />
         </div>
         <h1
           ref={headlineRef}
@@ -120,10 +120,7 @@ export function HeroSection({ data, settings }: HeroSectionProps) {
           {subtitle}
         </p>
 
-        <p
-          ref={taglineRef}
-          className="mx-auto mt-4 max-w-2xl text-(length:--font-size-body) text-text-secondary"
-        >
+        <p ref={taglineRef} className="mx-auto mt-4 max-w-2xl text-(length:--font-size-body) text-text-secondary">
           {tagline}
         </p>
 
